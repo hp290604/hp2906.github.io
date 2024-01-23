@@ -4,7 +4,8 @@
     <!-- <head>
         <meta name="viewport"content="width=device-width,initial-scale=1.0">
         <title>Weather app</title>
-        <link rel="stylesheet" href="style.css" >
+        <link rel="stylesheet" href="The-weather-web-app/app project
+/style.css" >
 
     </head> -->
     <head>
@@ -21,13 +22,13 @@
 
             </div>
             <div class="weather">
-                <img class ="weaicon" src="resources/images/rain.png" id="iconforweather" style="height: 110px;width: 90px;">
+                <img class ="weaicon" src="app project/resources/images/rain.png" id="iconforweather" style="height: 110px;width: 90px;">
                 <h1 id="weatherforcast">22 <sup>o</sup>C</h1>
                 <h2 id="cityname">New York</h2>
 
             </div>
             <div class="details">
-                <div class="samedetails" ><img src="resources/images/humidity.png" style="height: 40px;width: auto;">
+                <div class="samedetails" ><img src="app project/resources/images/humidity.png" style="height: 40px;width: auto;">
                     <div >
                         <p class="humid">50%</p>
                         <p class="hum">Humidity</p>
@@ -74,23 +75,23 @@
             document.getElementById("wind").innerHTML=jsfile.wind.speed+" km/hr";
             console.log(jsfile.weather[0].main);
             if(jsfile.weather[0].main=="Haze"){
-            document.querySelector(".weaicon").src="resources/images/fog.png";
+            document.querySelector(".weaicon").src="app project/resources/images/fog.png";
 
         }
         if(jsfile.weather[0].main=="Clear"){
-            document.querySelector(".weaicon").src="resources/images/clear.png";
+            document.querySelector(".weaicon").src="app project/resources/images/clear.png";
 
         }
         if(jsfile.weather[0].main=="Rain"){
-            document.querySelector(".weaicon").src="resources/images/rain.png";
+            document.querySelector(".weaicon").src="app project/resources/images/rain.png";
 
         }
         if(jsfile.weather[0].main=="Mist"){
-            document.querySelector(".weaicon").src="resources/images/mist.png";
+            document.querySelector(".weaicon").src="app project/resources/images/mist.png";
 
         }
         if(jsfile.weather[0].main=="Fog"){
-            document.querySelector(".weaicon").src="resources/images/fog.png";
+            document.querySelector(".weaicon").src="app project/resources/images/fog.png";
 
         }
         document.querySelector(".aqi").innerHTML="AQI:"+res.list[0].main.aqi;
