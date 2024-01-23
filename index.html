@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html>
+    <!-- <head>
+        <meta name="viewport"content="width=device-width,initial-scale=1.0">
+        <title>Weather app</title>
+        <link rel="stylesheet" href="style.css" >
+
+    </head> -->
+    <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="stylesheet" href="style.css" >
+        <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+    </head>
+    <body>
+        
+        <div class="card">
+            <div class="search">
+                <input  id="searchbox" type="text" placeholder="city name" spellcheck="false">
+                <button onclick="" class="button" id ="button"><ion-icon name="search-outline"></ion-icon></button>
+
+            </div>
+            <div class="weather">
+                <img class ="weaicon" src="resources/images/rain.png" id="iconforweather" style="height: 110px;width: 90px;">
+                <h1 id="weatherforcast">22 <sup>o</sup>C</h1>
+                <h2 id="cityname">New York</h2>
+
+            </div>
+            <div class="details">
+                <div class="samedetails" ><img src="resources/images/humidity.png" style="height: 40px;width: auto;">
+                    <div >
+                        <p class="humid">50%</p>
+                        <p class="hum">Humidity</p>
+                    </div>
+                </div>
+                <div class="samedetails"><img style="width:auto;height:40px" src="resources/images/wind.png">
+                    <div >
+                        <p class="det" id="wind" >15 km/hr</p>
+                        <p class="det">Wind</p>
+                    </div>
+                </div>
+
+                
+            </div>
+            <div class="aqi" style="margin-right: 35px;font-size: 24px"></div>
+            <div>
+                <p class="aqir"></p>
+            </div>
+        </div>
+        
+    </body>
+    <script type="module">
+        //http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API key}
+        let searchbox=document.querySelector(".search input");
+        let searchbtn=document.querySelector(".search button");
+        const apiKey="16ad7e8a70cf1094312611a182798a35";
+        const apiLink="https://api.openweathermap.org/data/2.5/weather?appid=16ad7e8a70cf1094312611a182798a35&";
+        async function checkWeather(city){
+            
+            const response=await fetch(apiLink+"q="+city);
+            const jsfile=await response.json();
+            let aqi="http://api.openweathermap.org/data/2.5/air_pollution?lat="+jsfile.coord.lat+"&lon="+jsfile.coord.lon+"&appid="+apiKey;
+        const filee=await fetch(aqi);
+        const res=await filee.json();
+        // console.log(res);
+            console.log(jsfile);
+            // console.log(jsfile.coord);
+            
+            document.getElementById("weatherforcast").innerHTML=(jsfile.main.temp-273).toFixed(1)+"&deg C";
+            document.getElementById("cityname").innerHTML=jsfile.name;
+            
+            // console.log(jsfile.main.humidity);
+            document.querySelector(".humid").innerHTML=jsfile.main.humidity+"%";
+            document.getElementById("wind").innerHTML=jsfile.wind.speed+" km/hr";
+            console.log(jsfile.weather[0].main);
+            if(jsfile.weather[0].main=="Haze"){
+            document.querySelector(".weaicon").src="resources/images/fog.png";
+
+        }
+        if(jsfile.weather[0].main=="Clear"){
+            document.querySelector(".weaicon").src="resources/images/clear.png";
+
+        }
+        if(jsfile.weather[0].main=="Rain"){
+            document.querySelector(".weaicon").src="resources/images/rain.png";
+
+        }
+        if(jsfile.weather[0].main=="Mist"){
+            document.querySelector(".weaicon").src="resources/images/mist.png";
+
+        }
+        if(jsfile.weather[0].main=="Fog"){
+            document.querySelector(".weaicon").src="resources/images/fog.png";
+
+        }
+        document.querySelector(".aqi").innerHTML="AQI:"+res.list[0].main.aqi;
+        if(res.list[0].main.aqi==1){
+            document.querySelector(".aqir").style.color="#2cf519";
+            document.querySelector(".aqir").innerHTML="Air quality is acceptable. However, there may be a risk for some people, particularly those who are unusually sensitive to air pollution."
+        }
+        // if(res.list[0].main.aqi==2){
+        // }
+        if(res.list[0].main.aqi>=2 && res.list[0].main.aqi<4){
+            document.querySelector(".aqir").style.color="yellow";
+            document.querySelector(".aqir").innerHTML="1. Members of sensitive groups may experience health effects.<br>2. The general public is less likely to be affected.<br>3. Some members of the general public may experience health effects."
+        }
+        // if(res.list[0].main.aqi==4){
+            
+        // }
+        if(res.list[0].main.aqi>=4){
+            document.querySelector(".aqir").style.color="#ff372a";
+            document.querySelector(".aqir").innerHTML="air pollution poses little or no risk."
+            document.querySelector(".aqir").innerHTML="1. Reduce the time you spend outdoors to under 30 minutes when AQI is high. Also, reduce the intensity of outdoor activity.<br>2. If you must go outdoors, consider wearing a mask.<br>3. Keep your air indoors healthy by keeping the windows and doors closed.<br>4. Health warning of emergency conditions: everyone is more likely to be affected."
+        }
+        }
+        
+        checkWeather("Delhi");
+        searchbtn.addEventListener('click',()=>{
+            document.querySelector(".aqir").innerHTML=""
+            checkWeather(searchbox.value);
+        })
+        
+        
+        // searchbtn.addEventListener('keypress',function(event)=>{
+        //     if(event.key==='ENTER'){
+        //         checkWeather(searchbox.value);
+        //     }
+        // }
+        
+
+
+    </script>
+
+
+</html>
